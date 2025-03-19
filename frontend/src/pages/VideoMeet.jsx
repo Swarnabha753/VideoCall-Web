@@ -412,68 +412,69 @@ export default function VideoMeetComponent() {
     
 
     return (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "1rem" }}>
             {askForUsername ? (
-                <div style={{ textAlign: "center", padding: "2rem" }}>
-                <h2 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>Enter into Lobby</h2>
-                
-                <TextField
-                    id="outlined-basic"
-                    label="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    variant="outlined"
-                    sx={{
-                        backgroundColor: "white",
-                        borderRadius: "8px",
-                        marginBottom: "1rem",
-                        width: "100%",
-                        maxWidth: "300px",
-                        "& .MuiOutlinedInput-root": {
-                            "& fieldset": {
-                                borderColor: "#ddd",
+                <div style={{ textAlign: "center", padding: "1.5rem", maxWidth: "90vw", width: "100%" }}>
+                    <h2 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>Enter into Lobby</h2>
+    
+                    {/* Username Input */}
+                    <TextField
+                        id="outlined-basic"
+                        label="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        variant="outlined"
+                        sx={{
+                            backgroundColor: "white",
+                            borderRadius: "8px",
+                            marginBottom: "1rem",
+                            width: "100%",
+                            maxWidth: "350px",
+                        }}
+                    />
+    
+                    {/* Connect Button */}
+                    <Button
+                        variant="contained"
+                        onClick={connect}
+                        sx={{
+                            backgroundColor: "#007bff",
+                            color: "white",
+                            fontSize: "1rem",
+                            padding: "10px 20px",
+                            borderRadius: "8px",
+                            textTransform: "none",
+                            "&:hover": {
+                                backgroundColor: "#0056b3",
                             },
-                            "&:hover fieldset": {
-                                borderColor: "#aaa",
-                            },
-                            "&.Mui-focused fieldset": {
-                                borderColor: "#007bff",
-                            },
-                        },
-                    }}
-                />
-                
-                <Button
-                    variant="contained"
-                    onClick={connect}
-                    sx={{
-                        backgroundColor: "#007bff",
-                        color: "white",
-                        fontSize: "1rem",
-                        padding: "10px 20px",
-                        borderRadius: "8px",
-                        textTransform: "none",
-                        "&:hover": {
-                            backgroundColor: "#0056b3",
-                        },
-                    }}
-                >
-                    Connect
-                </Button>
-            
-                <div style={{ marginTop: "2rem" }}>
-                    <video ref={localVideoref} autoPlay muted style={{ width: "100%", maxWidth: "500px", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}></video>
+                            width: "100%",
+                            maxWidth: "200px",
+                        }}
+                    >
+                        Connect
+                    </Button>
+    
+                    {/* Video Element (Responsive) */}
+                    <div style={{ marginTop: "2rem", width: "100%", maxWidth: "500px" }}>
+                        <video
+                            ref={localVideoref}
+                            autoPlay
+                            muted
+                            style={{
+                                width: "100%",
+                                borderRadius: "10px",
+                                boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+                            }}
+                        ></video>
+                    </div>
                 </div>
-            </div>
-            
             ) : (
-                <div className={styles.meetVideoContainer}>
+                <div className={styles.meetVideoContainer} style={{ width: "100%", padding: "1rem" }}>
                     {/* Chat Modal */}
                     {showModal && (
                         <div className={styles.chatRoom}>
                             <div className={styles.chatContainer}>
-                                <h1 style={{color:"black"}}>Chat</h1>
-    
+                                <h1 style={{ color: "black" }}>Chat</h1>
                                 <div className={styles.chattingDisplay}>
                                     {messages.length > 0 ? (
                                         messages.map((item, index) => (
@@ -483,17 +484,19 @@ export default function VideoMeetComponent() {
                                             </div>
                                         ))
                                     ) : (
-                                        <p style={{color:"black"}}>No Messages Yet</p>
+                                        <p style={{ color: "black" }}>No Messages Yet</p>
                                     )}
                                 </div>
     
+                                {/* Chat Input */}
                                 <div className={styles.chattingArea}>
-                                    <TextField 
-                                        value={message} 
-                                        onChange={(e) => setMessage(e.target.value)} 
-                                        id="outlined-basic" 
-                                        label="Enter Your Chat" 
-                                        variant="outlined" 
+                                    <TextField
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        id="outlined-basic"
+                                        label="Enter Your Chat"
+                                        variant="outlined"
+                                        sx={{ width: "100%" }}
                                     />
                                     <Button variant="contained" onClick={sendMessage}>Send</Button>
                                 </div>
@@ -501,8 +504,8 @@ export default function VideoMeetComponent() {
                         </div>
                     )}
     
-                    {/* Control Buttons */}
-                    <div className={styles.buttonContainers}>
+                    {/* Controls (Make Buttons Responsive) */}
+                    <div className={styles.buttonContainers} style={{ display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
                         <IconButton onClick={handleVideo} style={{ color: "white" }}>
                             {video ? <VideocamIcon /> : <VideocamOffIcon />}
                         </IconButton>
@@ -512,13 +515,11 @@ export default function VideoMeetComponent() {
                         <IconButton onClick={handleAudio} style={{ color: "white" }}>
                             {audio ? <MicIcon /> : <MicOffIcon />}
                         </IconButton>
-    
                         {screenAvailable && (
                             <IconButton onClick={handleScreen} style={{ color: "white" }}>
                                 {screen ? <ScreenShareIcon /> : <StopScreenShareIcon />}
                             </IconButton>
                         )}
-    
                         <Badge badgeContent={newMessages} max={999} color="orange">
                             <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>
                                 <ChatIcon />
@@ -526,13 +527,24 @@ export default function VideoMeetComponent() {
                         </Badge>
                     </div>
     
-                    {/* Local User Video */}
-                    <video className={styles.meetUserVideo} ref={localVideoref} autoPlay muted></video>
+                    {/* Local Video (Make it Responsive) */}
+                    <video
+                        className={styles.meetUserVideo}
+                        ref={localVideoref}
+                        autoPlay
+                        muted
+                        style={{
+                            width: "100%",
+                            maxWidth: "400px",
+                            borderRadius: "10px",
+                            boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+                        }}
+                    ></video>
     
-                    {/* Conference Video Grid */}
-                    <div className={styles.conferenceView}>
+                    {/* Conference Video Grid (Responsive) */}
+                    <div className={styles.conferenceView} style={{ display: "grid", gap: "10px", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", padding: "1rem" }}>
                         {videos.map((video) => (
-                            <div key={video.socketId}>
+                            <div key={video.socketId} style={{ width: "100%" }}>
                                 <video
                                     data-socket={video.socketId}
                                     ref={(ref) => {
@@ -541,6 +553,11 @@ export default function VideoMeetComponent() {
                                         }
                                     }}
                                     autoPlay
+                                    style={{
+                                        width: "100%",
+                                        borderRadius: "10px",
+                                        boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+                                    }}
                                 />
                             </div>
                         ))}
@@ -549,6 +566,7 @@ export default function VideoMeetComponent() {
             )}
         </div>
     );
+    
     
     
 }
