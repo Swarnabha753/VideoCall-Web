@@ -1,12 +1,13 @@
 import axios from "axios";
 import httpStatus from "http-status";
-import {createContext, useContext, useState} from "react";
+import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import server from "../environment";
 
 export const AuthContext = createContext({});
 
 const client = axios.create({
-    baseURL : "http://localhost:8000/api/users"
+    baseURL: `${server}/api/users`
 });
 
 export const AuthProvider = ({ children }) => {
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
     const router = useNavigate();
 
-    const handleRegister = async (name, username, password) => {
+    const handleRegister = async(name, username, password) => {
         try {
             let request = await client.post("/register", {
                 name: name,
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const handleLogin = async (username, password) => {
+    const handleLogin = async(username, password) => {
         try {
             let request = await client.post("/login", {
                 username: username,
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const getHistoryOfUser = async () => {
+    const getHistoryOfUser = async() => {
         try {
             let request = await client.get("/get_all_activity", {
                 params: {
@@ -63,12 +64,12 @@ export const AuthProvider = ({ children }) => {
                 }
             });
             return request.data;
-        } catch(err) {
+        } catch (err) {
             throw err;
         }
     }
 
-    const addToUserHistory = async (meetingCode) => {
+    const addToUserHistory = async(meetingCode) => {
         try {
             let request = await client.post("/add_to_activity", {
                 token: localStorage.getItem("token"),
@@ -82,7 +83,12 @@ export const AuthProvider = ({ children }) => {
 
 
     const data = {
-        userData, setUserData, addToUserHistory, getHistoryOfUser, handleRegister, handleLogin
+        userData,
+        setUserData,
+        addToUserHistory,
+        getHistoryOfUser,
+        handleRegister,
+        handleLogin
     }
 
     return (
