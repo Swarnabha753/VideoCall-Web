@@ -50,7 +50,7 @@ A **fully functional Zoom-like video calling application** built using **React.j
 ---
 
 ## 📂 Project Structure  
-
+```
 videocallingweb/
 │── backend/
 │   ├── src/
@@ -75,7 +75,7 @@ videocallingweb/
 │── .gitignore             # Files to ignore in version control
 │── README.md              # Project documentation
 
-
+```
 ---
 
 ## 📥 Installation Guide  
