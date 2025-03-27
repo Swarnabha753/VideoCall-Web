@@ -71,9 +71,9 @@ videocallingweb/
 │   │   ├── App.js         # Main React component
 │   │   ├── index.js       # Entry point for frontend
 │   ├── package.json       # Frontend dependencies
+│
 │── .gitignore             # Files to ignore in version control
 │── README.md              # Project documentation
-
 
 
 ---
