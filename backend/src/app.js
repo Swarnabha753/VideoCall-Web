@@ -24,7 +24,7 @@ const io = connectToSocket(server);
 
 app.set("port", (process.env.PORT || 8000));
 app.use(cors({
-    origin: "https://xmeet-z2bw.onrender.com", // Your frontend URL
+    origin: "https://xmeet-z2bw.onrender.com", 
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true // Allow cookies and authentication headers
 }));
