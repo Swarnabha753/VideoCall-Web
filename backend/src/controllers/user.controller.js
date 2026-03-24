@@ -16,7 +16,6 @@ const login = async (req, res) => {
             return res.status(httpStatus.NOT_FOUND).json({ message: "User Not Found" })
         }
 
-
         let isPasswordCorrect = await bcrypt.compare(password, user.password)
 
         if (isPasswordCorrect) {
@@ -36,8 +35,6 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     const { name, username, password } = req.body;
-    // console.log("📩 Incoming Registration Request:", req.body);
-
     if (!username || !password || !name) {
         return res.status(400).json({ message: "All fields are required" });
     }
